@@ -1,4 +1,4 @@
-package asterion.behaviour_trees;
+package behaviour_trees.core;
 
 public enum Status {
 	SUCCESS,
