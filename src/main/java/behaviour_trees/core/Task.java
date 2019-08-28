@@ -9,6 +9,18 @@ public interface Task {
 	Status tick();
 
 	/**
+	 * Method to include the specific logic of each task. It is called from tick().
+	 * @return the result Status to pass to tick().
+	 */
+	Status run();
+
+	/**
+	 * Returns the current status of the task. This will be the result of the last tick, or TERMINATED if terminate() was called.
+	 * @return the current Status of the task.
+	 */
+	Status getStatus();
+
+	/**
 	 * Terminates the task without waiting for a result.
 	 */
 	void terminate();
