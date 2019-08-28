@@ -36,4 +36,14 @@ public interface Task {
 	 * @return a Guard, null if the task is unguarded.
 	 */
 	Guard getGuard();
+
+	/**
+	 * This method is called after task is finished (either after producing a result or on being terminated).
+	 */
+	void cleanup();
+
+	/**
+	 * Resets the task, making it ready to be run again.
+	 */
+	void reset();
 }
