@@ -1,12 +1,15 @@
 package behaviour_trees.decorator;
 
+import behaviour_trees.core.Guard;
+import behaviour_trees.core.GuardableTask;
 import behaviour_trees.core.Status;
 import behaviour_trees.core.Task;
 
-public class AlwaysSucceed implements Decorator {
+public class AlwaysSucceed extends GuardableTask implements Decorator {
 	Task wrappedTask;
 
-	public AlwaysSucceed(Task wrappedTask) {
+	public AlwaysSucceed(Task wrappedTask, Guard guard) {
+		super(guard);
 		this.wrappedTask = wrappedTask;
 	}
 
@@ -16,7 +19,7 @@ public class AlwaysSucceed implements Decorator {
 
 	public Status tick() {
 		Status result = wrappedTask.tick();
-		if(result == Status.WAITING) return Status.WAITING;
+		if(result == Status.RUNNING) return Status.RUNNING;
 		else return Status.SUCCESS;
 	}
 

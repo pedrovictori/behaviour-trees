@@ -12,4 +12,16 @@ public interface Task {
 	 * Terminates the task without waiting for a result.
 	 */
 	void terminate();
+
+	/**
+	 * Checks if the task is guarded (only reachable if a condition is met)
+	 * @return true if the task is guarded, false otherwise
+	 */
+	boolean isGuarded();
+
+	/**
+	 * Returns the task's guard
+	 * @return a Guard, null if the task is unguarded.
+	 */
+	Guard getGuard();
 }
