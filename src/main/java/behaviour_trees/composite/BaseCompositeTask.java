@@ -22,10 +22,10 @@ public abstract class BaseCompositeTask extends GuardableTask implements Composi
 
 	@Override
 	public void terminate() {
-		super.terminate();
 		for (Task branch : branches) {
 			branch.terminate();
 		}
+		setStatus(Status.TERMINATED);
 	}
 
 	@Override
@@ -37,9 +37,9 @@ public abstract class BaseCompositeTask extends GuardableTask implements Composi
 
 	@Override
 	public void reset() {
-		super.reset();
 		for (Task branch : branches) {
 			branch.reset();
 		}
+		super.reset();
 	}
 }

@@ -17,13 +17,18 @@ public class AlwaysSucceed extends GuardableTask implements Decorator {
 		return wrappedTask;
 	}
 
-	public Status tick() {
+	public Status run() {
 		Status result = wrappedTask.tick();
 		if(result == Status.RUNNING) return Status.RUNNING;
 		else return Status.SUCCESS;
 	}
 
 	public void terminate() {
+		wrappedTask.terminate();
+	}
 
+	@Override
+	public void cleanup() {
+		wrappedTask.cleanup();
 	}
 }

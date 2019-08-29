@@ -22,11 +22,6 @@ public abstract class GuardableTask implements Task {
 
 	public abstract Status run();
 
-	public void terminate(){
-		setStatus(Status.TERMINATED);
-		cleanup();
-	};
-
 	public boolean isGuarded(){
 		return guard != null;
 	}
@@ -42,8 +37,6 @@ public abstract class GuardableTask implements Task {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
-	public abstract void cleanup();
 
 	@Override
 	public void reset() {
