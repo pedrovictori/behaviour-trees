@@ -1,8 +1,8 @@
 package behaviour_trees.core;
 
+/**
+ * Interfade to tag leaf tasks (terminal branches of the tree).
+ */
 public interface LeafTask extends Task{
-	/**
-	 * This method is called whenever this leaf is reached by the tree.
-	 */
-	void reached();
+
 }
