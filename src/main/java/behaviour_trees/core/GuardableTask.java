@@ -3,8 +3,10 @@ package behaviour_trees.core;
 public abstract class GuardableTask implements Task {
 	private Guard guard;
 	private Status status = Status.FRESH;
+	private int id;
 
-	public GuardableTask(Guard guard) {
+	public GuardableTask(int id, Guard guard) {
+		this.id = id;
 		this.guard = guard;
 	}
 

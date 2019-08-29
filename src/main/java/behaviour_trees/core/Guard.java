@@ -2,8 +2,8 @@ package behaviour_trees.core;
 
 public abstract class Guard extends GuardableTask {
 
-	public Guard(Guard guard) {
-		super(guard);
+	public Guard(int id, Guard guard) {
+		super(id, guard);
 	}
 
 	/**

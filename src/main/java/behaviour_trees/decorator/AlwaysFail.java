@@ -8,8 +8,8 @@ import behaviour_trees.core.Task;
 public class AlwaysFail extends GuardableTask implements Decorator {
 	Task wrappedTask;
 
-	public AlwaysFail(Task wrappedTask, Guard guard) {
-		super(guard);
+	public AlwaysFail(int id, Task wrappedTask, Guard guard) {
+		super(id, guard);
 		this.wrappedTask = wrappedTask;
 	}
 

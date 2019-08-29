@@ -10,8 +10,8 @@ import java.util.List;
 public abstract class BaseCompositeTask extends GuardableTask implements CompositeTask {
 	private List<Task> branches;
 
-	public BaseCompositeTask(List<Task> branches, Guard guard) {
-		super(guard);
+	public BaseCompositeTask(int id, List<Task> branches, Guard guard) {
+		super(id, guard);
 		this.branches = branches;
 	}
 

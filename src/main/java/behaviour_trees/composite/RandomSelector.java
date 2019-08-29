@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class RandomSelector extends Selector {
-	public RandomSelector(List<Task> branches, Guard guard) {
-		super(branches, guard);
+	public RandomSelector(int id, List<Task> branches, Guard guard) {
+		super(id, branches, guard);
 		Collections.shuffle(getBranches());
 	}
 }

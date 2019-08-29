@@ -8,8 +8,8 @@ import behaviour_trees.core.Task;
 public class AlwaysSucceed extends GuardableTask implements Decorator {
 	Task wrappedTask;
 
-	public AlwaysSucceed(Task wrappedTask, Guard guard) {
-		super(guard);
+	public AlwaysSucceed(int id, Task wrappedTask, Guard guard) {
+		super(id, guard);
 		this.wrappedTask = wrappedTask;
 	}
 

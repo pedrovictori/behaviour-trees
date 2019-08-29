@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class RandomSequence extends Sequence {
-	public RandomSequence(List<Task> branches, Guard guard) {
-		super(branches, guard);
+	public RandomSequence(int id, List<Task> branches, Guard guard) {
+		super(id, branches, guard);
 		Collections.shuffle(getBranches());
 	}
 }

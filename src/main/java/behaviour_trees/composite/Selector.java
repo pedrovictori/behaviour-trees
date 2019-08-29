@@ -10,8 +10,8 @@ import java.util.List;
 public class Selector extends BaseCompositeTask implements CompositeTask {
 	private int pos;
 
-	public Selector(List<Task> branches, Guard guard) {
-		super(branches, guard);
+	public Selector(int id, List<Task> branches, Guard guard) {
+		super(id, branches, guard);
 	}
 
 	public Status run() {

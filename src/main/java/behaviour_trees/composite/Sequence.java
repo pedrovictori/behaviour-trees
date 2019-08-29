@@ -10,8 +10,8 @@ import java.util.List;
 public class Sequence extends BaseCompositeTask implements CompositeTask {
 	private int pos;
 
-	public Sequence(List<Task> branches, Guard guard) {
-		super(branches, guard);
+	public Sequence(int id, List<Task> branches, Guard guard) {
+		super(id, branches, guard);
 	}
 
 	public Status run() {
