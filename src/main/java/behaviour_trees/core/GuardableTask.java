@@ -34,6 +34,10 @@ public abstract class GuardableTask implements Task {
 		return status;
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	public void setStatus(Status status) {
 		this.status = status;
 	}
