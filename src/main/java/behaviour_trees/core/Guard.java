@@ -1,9 +1,11 @@
 package behaviour_trees.core;
 
 public abstract class Guard extends GuardableTask {
+	private GuardableTask guardedTask;
 
-	public Guard(int id, Guard guard) {
+	public Guard(int id, Guard guard, GuardableTask guardedTask) {
 		super(id, guard);
+		this.guardedTask = guardedTask;
 	}
 
 	/**
@@ -12,11 +14,32 @@ public abstract class Guard extends GuardableTask {
 	 */
 	public abstract boolean checkCondition();
 
-	public Status tick(){
+	public Status run(){
 		return checkCondition() ? Status.SUCCESS : Status.FAILURE;
 	}
 
 	public void terminate() {
 		//do nothing, this task can't run for more than one tick, so terminate doesn't make sense here
 	}
+
+	@Override
+	public void cleanup() {
+		//do nothing, this task can't run for more than one tick, so terminate doesn't make sense here
+	}
+
+	public GuardableTask getGuardedTask() {
+		return guardedTask;
+	}
+
+	/**
+	 * Useful for a series of nested Guards wrapping a task.
+	 * @return a GuardableTask
+	 */
+	public GuardableTask getRootTask(){
+		if (getGuardedTask() instanceof Guard) {
+			return ((Guard) getGuardedTask()).getRootTask();
+		}
+		else return getGuardedTask();
+	}
+
 }
