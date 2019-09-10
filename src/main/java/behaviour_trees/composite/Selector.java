@@ -1,7 +1,6 @@
 package behaviour_trees.composite;
 
 import behaviour_trees.core.Guard;
-import behaviour_trees.core.GuardableTask;
 import behaviour_trees.core.Status;
 import behaviour_trees.core.Task;
 
