@@ -1,7 +1,7 @@
 package behaviour_trees.core;
 
 public abstract class Guard extends GuardableTask {
-	private GuardableTask guardedTask;
+	private Task guardedTask;
 
 	public Guard(int id, Guard guard, GuardableTask guardedTask) {
 		super(id, guard);
@@ -27,7 +27,11 @@ public abstract class Guard extends GuardableTask {
 		//do nothing, this task can't run for more than one tick, so terminate doesn't make sense here
 	}
 
-	public GuardableTask getGuardedTask() {
+	public void setGuardedTask(Task guardedTask) {
+		this.guardedTask = guardedTask;
+	}
+
+	public Task getGuardedTask() {
 		return guardedTask;
 	}
 
@@ -35,7 +39,7 @@ public abstract class Guard extends GuardableTask {
 	 * Useful for a series of nested Guards wrapping a task.
 	 * @return a GuardableTask
 	 */
-	public GuardableTask getRootTask(){
+	public Task getRootTask(){
 		if (getGuardedTask() instanceof Guard) {
 			return ((Guard) getGuardedTask()).getRootTask();
 		}
