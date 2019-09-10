@@ -89,18 +89,16 @@ public class TreePlanter {
 	}
 	private Document document;
 	private Schema schema;
-	private String fileName;
 	private Map<String, Class<? extends Task>> classLibrary;
 
-	public TreePlanter(String fileName, Map<String, Class<? extends Task>> classLibrary) {
-		this.fileName = fileName;
+	public TreePlanter(InputStream xmlStream, Map<String, Class<? extends Task>> classLibrary) {
 		this.classLibrary = classLibrary;
 		try {
 			schema = loadSchema();
 		} catch (SAXException e) {
 			e.printStackTrace();
 		}
-		Document document = getValidatedDocument();
+		document = getValidatedDocument(xmlStream);
 	}
 
 	public Tree plantTree(int id) {
@@ -223,7 +221,7 @@ public class TreePlanter {
 		}
 	}
 
-	private Document getValidatedDocument() {
+	private Document getValidatedDocument(InputStream is) {
 		DocumentBuilderFactory builderFactory =
 				DocumentBuilderFactory.newInstance();
 		builderFactory.setSchema(schema);
@@ -237,7 +235,7 @@ public class TreePlanter {
 		}
 		Document document = null;
 		try {
-			document = builder.parse((Main.class.getClassLoader().getResourceAsStream("mp.xml")));
+			document = builder.parse(is);
 		} catch (SAXException | IOException e) {
 			e.printStackTrace();
 		}
@@ -255,7 +253,7 @@ public class TreePlanter {
 	private Schema loadSchema() throws SAXException {
 		String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
 		SchemaFactory factory = SchemaFactory.newInstance(language);
-		schema = factory.newSchema((Main.class.getClassLoader().getResource("bt.xsd")));
+		schema = factory.newSchema((getClass().getClassLoader().getResource("bt.xsd")));
 		return schema;
 	}
 }
