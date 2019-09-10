@@ -35,4 +35,12 @@ public class Tree extends GuardableTask {
 	public void cleanup() {
 		trunk.cleanup();
 	}
+	@Override
+	@Override
+	public String toString() {
+		return "Tree{" +
+				"trunk=" + trunk +
+				", id=" + id +
+				'}';
+	}
 }

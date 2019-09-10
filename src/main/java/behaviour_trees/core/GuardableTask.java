@@ -50,4 +50,9 @@ public abstract class GuardableTask implements Task {
 		terminate();
 		setStatus(Status.FRESH);
 	}
+
+	@Override
+	public String toString() {
+		return getClass().toString();
+	}
 }

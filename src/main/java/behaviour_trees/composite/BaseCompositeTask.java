@@ -42,4 +42,14 @@ public abstract class BaseCompositeTask extends GuardableTask implements Composi
 		}
 		super.reset();
 	}
+
+	@Override
+	public String toString() {
+		String className =  getClass().toString();
+		StringBuilder stringBuilder = new StringBuilder();
+		for (Task branch : branches) {
+			stringBuilder.append(branch.toString());
+		}
+		return className + stringBuilder.toString();
+	}
 }
