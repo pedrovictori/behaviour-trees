@@ -1,41 +1,77 @@
 package behaviour_trees.core;
 
-public class Tree extends GuardableTask {
+public class Tree implements Task {
 	private Task trunk;
+	private int id;
+	private Status status = Status.FRESH;
 	private boolean keepRunning = false;
+	private String[] args;
 
-	public Tree(int id, Task trunk, Guard guard) {
-		super(id, guard);
+	public Tree(int id, Task trunk, String... args) {
+		this.id = id;
 		this.trunk = trunk;
+		this.args = args;
 	}
 
-	public void runOnLoop() {
+	public void tickAndLoop() {
 		keepRunning = true;
-		run();
+		tick();
 	}
 
 	@Override
-	public Status run() {
+	public Status tick() {
 		Status result = trunk.tick();
 		if (keepRunning && result != Status.RUNNING) { //all the branches are finished
 			reset();
-			return Status.RUNNING;
+			result = Status.RUNNING;
 		}
-		else return result;
+		status = result;
+		return result;
 	}
 
 	@Override
 	public void terminate() {
 		keepRunning = false;
 		trunk.terminate();
-		setStatus(Status.TERMINATED);
+		status = Status.TERMINATED;
 	}
 
 	@Override
 	public void cleanup() {
 		trunk.cleanup();
 	}
+
 	@Override
+	public Status getStatus() {
+		return status;
+	}
+
+	@Override
+	public boolean isGuarded() {
+		return false;
+	}
+
+	@Override
+	public Guard getGuard() {
+		return null;
+	}
+
+	@Override
+	public int getId() {
+		return id;
+	}
+
+	@Override
+	public String[] getArgs() {
+		return args;
+	}
+
+	@Override
+	public void reset() {
+		terminate();
+		status = Status.FRESH;
+	}
+
 	@Override
 	public String toString() {
 		return "Tree{" +
