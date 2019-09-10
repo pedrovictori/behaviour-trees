@@ -13,7 +13,7 @@ public abstract class GuardableTask implements Task {
 		this.args = args;
 	}
 
-	public Status tick(){
+	public final Status tick(){
 		if (isGuarded()) {
 			if(getGuard().checkCondition()) setStatus(run());
 			else setStatus(Status.FAILURE);
