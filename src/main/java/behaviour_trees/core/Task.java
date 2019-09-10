@@ -9,12 +9,6 @@ public interface Task {
 	Status tick();
 
 	/**
-	 * Method to include the specific logic of each task. It is called from tick().
-	 * @return the result Status to pass to tick().
-	 */
-	Status run();
-
-	/**
 	 * Returns the current status of the task. This will be the result of the last tick, or TERMINATED if terminate() was called.
 	 * @return the current Status of the task.
 	 */
@@ -41,6 +35,10 @@ public interface Task {
 	 * This method is called after task is finished (either after producing a result or on being terminated).
 	 */
 	void cleanup();
+
+	int getId();
+
+	String[] getArgs();
 
 	/**
 	 * Resets the task, making it ready to be run again.
