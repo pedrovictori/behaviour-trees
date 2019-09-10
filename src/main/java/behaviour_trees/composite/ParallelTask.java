@@ -17,10 +17,10 @@ public class ParallelTask extends BaseCompositeTask implements CompositeTask {
 	private Policy policy;
 	private boolean runAlways;
 
-	public ParallelTask(int id, Policy policy, boolean runAlways, List<Task> branches, Guard guard) {
-		super(id, branches, guard);
-		this.policy = policy;
-		this.runAlways = runAlways;
+	public ParallelTask(int id, List<Task> branches, Guard guard, String... args) {
+		super(id, branches, guard, args);
+		this.policy = Policy.valueOf(Policy.class, getArgs()[0]);
+		this.runAlways = Boolean.valueOf(getArgs()[1]);
 	}
 
 	/**
