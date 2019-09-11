@@ -10,6 +10,8 @@ public class Tree implements Task {
 	public Tree(int id, Task trunk, String... args) {
 		this.id = id;
 		this.trunk = trunk;
+		if(trunk == null) throw new IllegalArgumentException("Trunk can't be null");
+		System.out.println(trunk.toString());
 		this.args = args;
 	}
 
@@ -75,7 +77,7 @@ public class Tree implements Task {
 	@Override
 	public String toString() {
 		return "Tree{" +
-				"trunk=" + trunk +
+				"trunk=" + trunk.toString() +
 				", id=" + id +
 				'}';
 	}

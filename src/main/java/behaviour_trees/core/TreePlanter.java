@@ -7,6 +7,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.management.modelmbean.XMLParseException;
+import javax.swing.text.html.HTML;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -142,15 +144,13 @@ public class TreePlanter {
 
 	private Task parseTask(Element element, int id) {
 		String taskType = element.getAttribute(Attribute.TYPE.getName());
-		Task thisTask = null;
 		if (taskType.equals(TaskType.COMPOSITE.getType())) {
-			parseCompositeTask(element, id);
+			return parseCompositeTask(element, id);
 		} else if (taskType.equals(TaskType.LEAF.getType())) {
-			thisTask = parseLeafTask(element, id);
+			return parseLeafTask(element, id);
 		} else {
 			throw new IllegalArgumentException("Invalid task type");
 		}
-		return thisTask;
 	}
 	private Guard parseGuard(Element element, int id) {
 		if (element.getElementsByTagName(TagName.GUARD.getName()).getLength() == 0) { //has no guard
@@ -173,6 +173,7 @@ public class TreePlanter {
 					String[].class);
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
+			throw new IllegalArgumentException("Invalid class: " + cClass.getName());
 		}
 
 		//create new instance and return it
@@ -180,15 +181,14 @@ public class TreePlanter {
 			return constructor.newInstance(id, branches, guard, args);
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
+			throw new IllegalArgumentException("Invalid class: " + cClass.getName());
 		}
-		return null;
 	}
 
 	private Task createInstanceFrom(Element element, int id, Guard guard, String... args) {
 		String className = element.getAttribute(Attribute.CLASS.getName());
 		Class<? extends Task> loadedClass = classLibrary.get(className);
 		Constructor<? extends Task> constructor = null;
-
 		try {
 			constructor = loadedClass.getConstructor(
 					int.class,
@@ -196,6 +196,7 @@ public class TreePlanter {
 					String[].class);
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
+			throw new IllegalArgumentException("Invalid class: " + loadedClass.getName());
 		}
 
 		//create new instance and return it
@@ -203,19 +204,19 @@ public class TreePlanter {
 			return constructor.newInstance(id, guard, args);
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
+			throw new IllegalArgumentException("Invalid class: " + loadedClass.getName());
 		}
-		return null;
 	}
 
 	private String[] parseArgs(Element element) {
 		if (element.getElementsByTagName(TagName.ARGS.getName()).getLength() == 0) { //has no args
 			return new String[0];
 		} else {
-			Node argsNode = element.getElementsByTagName(TagName.ARGS.getName()).item(0);
-			NodeList argNodes = argsNode.getChildNodes();
+			Element argsElement = (Element) element.getElementsByTagName(TagName.ARGS.getName()).item(0);
+			NodeList argNodes = argsElement.getChildNodes();
 			String[] args = new String[argNodes.getLength()];
 			for (int i = 0; i < argNodes.getLength(); i++) {
-				args[i] = argNodes.item(i).getNodeValue();
+				args[i] = argNodes.item(i).getTextContent();
 			}
 			return args;
 		}

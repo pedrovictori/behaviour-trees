@@ -9,7 +9,6 @@ public abstract class GuardableTask implements Task {
 	public GuardableTask(int id, Guard guard, String... args) {
 		this.id = id;
 		this.guard = guard;
-		guard.setGuardedTask(this);
 		this.args = args;
 	}
 
