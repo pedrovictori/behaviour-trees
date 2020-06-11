@@ -12,5 +12,14 @@
     <groupId>asterion</groupId>
     <artifactId>behaviour-trees</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub pedrovictori Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/pedrovictori/behaviour-trees</url>
+        </repository>
+    </distributionManagement>
+
 </project>
