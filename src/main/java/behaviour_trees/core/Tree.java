@@ -1,10 +1,10 @@
 package behaviour_trees.core;
 
 public class Tree implements Task {
-	private Task trunk;
-	private int id;
+	private final Task trunk;
+	private final int id;
 	private Status status = Status.FRESH;
-	private String[] args;
+	private final String[] args;
 
 	public Tree(int id, Task trunk, String... args) {
 		this.id = id;
