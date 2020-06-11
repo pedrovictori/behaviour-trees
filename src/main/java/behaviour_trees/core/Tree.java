@@ -4,36 +4,23 @@ public class Tree implements Task {
 	private Task trunk;
 	private int id;
 	private Status status = Status.FRESH;
-	private boolean keepRunning = false;
 	private String[] args;
 
 	public Tree(int id, Task trunk, String... args) {
 		this.id = id;
 		this.trunk = trunk;
 		if(trunk == null) throw new IllegalArgumentException("Trunk can't be null");
-		System.out.println(trunk.toString());
+		System.out.println(trunk.toString()); //todo log
 		this.args = args;
-	}
-
-	public void tickAndLoop() {
-		keepRunning = true;
-		tick();
 	}
 
 	@Override
 	public Status tick() {
-		Status result = trunk.tick();
-		if (keepRunning && result != Status.RUNNING) { //all the branches are finished
-			reset();
-			result = Status.RUNNING;
-		}
-		status = result;
-		return result;
+		return status = trunk.tick();
 	}
 
 	@Override
 	public void terminate() {
-		keepRunning = false;
 		trunk.terminate();
 		status = Status.TERMINATED;
 	}

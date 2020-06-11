@@ -106,9 +106,7 @@ public class TreePlanter {
 	public Tree plantTree(int id) {
 		//find trunk and tree guard if present
 		Element root = document.getDocumentElement();
-
-		Tree tree = new Tree(id, parseTask(root, id), parseArgs(root));
-		return tree;
+		return new Tree(id, parseTask(root, id), parseArgs(root));
 	}
 
 	private CompositeTask parseCompositeTask(Element element, int id) {

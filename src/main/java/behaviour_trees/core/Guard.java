@@ -13,16 +13,16 @@ public abstract class Guard extends GuardableTask {
 	 */
 	public abstract boolean checkCondition();
 
-	public Status run(){
+	public final Status run(){
 		return checkCondition() ? Status.SUCCESS : Status.FAILURE;
 	}
 
-	public void terminate() {
+	public final void terminate() {
 		//do nothing, this task can't run for more than one tick, so terminate doesn't make sense here
 	}
 
 	@Override
-	public void cleanup() {
-		//do nothing, this task can't run for more than one tick, so terminate doesn't make sense here
+	public final void cleanup() {
+		//do nothing, this task can't run for more than one tick, so cleanup doesn't make sense here
 	}
 }

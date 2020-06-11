@@ -12,9 +12,12 @@ public abstract class GuardableTask implements Task {
 		this.args = args;
 	}
 
+	@Override
 	public final Status tick(){
 		if (isGuarded()) {
-			if(getGuard().checkCondition()) setStatus(run());
+			Guard guard = getGuard();
+			boolean success = guard.tick() == Status.SUCCESS;
+			if(success) setStatus(run());
 			else setStatus(Status.FAILURE);
 		} else setStatus(run());
 
@@ -23,6 +26,8 @@ public abstract class GuardableTask implements Task {
 	}
 
 	public abstract Status run();
+
+	public abstract void cleanup();
 
 	public boolean isGuarded(){
 		return guard != null;
