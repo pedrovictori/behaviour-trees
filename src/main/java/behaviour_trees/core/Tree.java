@@ -10,7 +10,6 @@ public class Tree implements Task {
 		this.id = id;
 		this.trunk = trunk;
 		if(trunk == null) throw new IllegalArgumentException("Trunk can't be null");
-		System.out.println(trunk.toString()); //todo log
 		this.args = args;
 	}
 
