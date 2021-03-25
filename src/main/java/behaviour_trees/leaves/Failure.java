@@ -5,7 +5,7 @@ import behaviour_trees.core.GuardableTask;
 import behaviour_trees.core.Status;
 
 public class Failure extends GuardableTask {
-	public Failure(int id, Guard guard) {
+	public Failure(int id, Guard guard, String[] args) {
 		super(id, guard);
 	}
 

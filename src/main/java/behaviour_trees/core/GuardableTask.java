@@ -15,11 +15,6 @@ public abstract class GuardableTask implements Task {
 		this.args = args;
 	}
 
-	protected GuardableTask(Guard guard, int id) {
-		this.guard = guard;
-		this.id = id;
-	}
-
 	@Override
 	public final Status tick(){
 		if (isGuarded()) {
