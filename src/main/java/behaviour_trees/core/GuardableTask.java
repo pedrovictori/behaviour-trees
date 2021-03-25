@@ -1,15 +1,23 @@
 package behaviour_trees.core;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public abstract class GuardableTask implements Task {
 	private Guard guard;
 	private Status status = Status.FRESH;
 	private int id;
-	private String[] args;
+	private String[] args = new String[0];
 
-	public GuardableTask(int id, Guard guard, String... args) {
+	protected GuardableTask(int id, Guard guard, String... args) {
 		this.id = id;
 		this.guard = guard;
 		this.args = args;
+	}
+
+	protected GuardableTask(Guard guard, int id) {
+		this.guard = guard;
+		this.id = id;
 	}
 
 	@Override
