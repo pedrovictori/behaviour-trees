@@ -1,6 +1,10 @@
-package behaviour_trees.core;
+package behaviour_trees.leaves;
 
-public class Failure extends GuardableTask{
+import behaviour_trees.core.Guard;
+import behaviour_trees.core.GuardableTask;
+import behaviour_trees.core.Status;
+
+public class Failure extends GuardableTask {
 	public Failure(int id, Guard guard) {
 		super(id, guard);
 	}

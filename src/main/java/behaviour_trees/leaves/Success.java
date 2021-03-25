@@ -1,6 +1,10 @@
-package behaviour_trees.core;
+package behaviour_trees.leaves;
 
-public class Success extends GuardableTask{
+import behaviour_trees.core.Guard;
+import behaviour_trees.core.GuardableTask;
+import behaviour_trees.core.Status;
+
+public class Success extends GuardableTask {
 	public Success(int id, Guard guard) {
 		super(id, guard);
 	}

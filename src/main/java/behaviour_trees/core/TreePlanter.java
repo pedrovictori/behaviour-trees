@@ -1,14 +1,13 @@
 package behaviour_trees.core;
 
 import behaviour_trees.composite.*;
+import behaviour_trees.leaves.Failure;
+import behaviour_trees.leaves.Success;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.management.modelmbean.XMLParseException;
-import javax.swing.text.html.HTML;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TreePlanter {
+	private static final Map<String, Class<? extends Task>> DEFAULT_LIBRARY = Map.of("Success", Success.class, "Failure", Failure.class);
 	private enum TagName {
 		ARGS("args"),
 		ARG("arg"),
@@ -185,7 +185,7 @@ public class TreePlanter {
 
 	private Task createInstanceFrom(Element element, int id, Guard guard, String... args) {
 		String className = element.getAttribute(Attribute.CLASS.getName());
-		Class<? extends Task> loadedClass = classLibrary.get(className);
+		Class<? extends Task> loadedClass = classLibrary.getOrDefault(className, DEFAULT_LIBRARY.get(className));
 		Constructor<? extends Task> constructor = null;
 		try {
 			constructor = loadedClass.getConstructor(
