@@ -23,6 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import static behaviour_trees.core.BTLogger.*;
 
 public class TreePlanter {
 	private static final Map<String, Class<? extends Task>> DEFAULT_LIBRARY = Map.of("Success", Success.class, "Failure", Failure.class);
@@ -94,6 +95,7 @@ public class TreePlanter {
 	private Map<String, Class<? extends Task>> classLibrary;
 
 	public TreePlanter(InputStream xmlStream, Map<String, Class<? extends Task>> classLibrary) {
+		debug("Creating new TreePlanter");
 		this.classLibrary = classLibrary;
 		try {
 			schema = loadSchema();
@@ -104,6 +106,7 @@ public class TreePlanter {
 	}
 
 	public Tree plantTree(int id) {
+		debug("planting new Tree");
 		//find trunk and tree guard if present
 		Element root = document.getDocumentElement();
 		return new Tree(id, parseTask(root, id), parseArgs(root));
@@ -142,6 +145,7 @@ public class TreePlanter {
 
 	private Task parseTask(Element element, int id) {
 		String taskType = element.getAttribute(Attribute.TYPE.getName());
+		debug("task type: {}", taskType);
 		if (taskType.equals(TaskType.COMPOSITE.getType())) {
 			return parseCompositeTask(element, id);
 		} else if (taskType.equals(TaskType.LEAF.getType())) {
@@ -154,6 +158,7 @@ public class TreePlanter {
 		if (element.getElementsByTagName(TagName.GUARD.getName()).getLength() == 0) { //has no guard
 			return null;
 		} else {
+			debug("parsing guard");
 			Element guardElement = (Element) element.getElementsByTagName(TagName.GUARD.getName()).item(0);
 			Task guard = createInstanceFrom(guardElement, id, parseGuard(guardElement, id), parseArgs(guardElement)); //guard can itself be guarded
 			if(guard instanceof Guard) return (Guard) guard;
@@ -185,6 +190,7 @@ public class TreePlanter {
 
 	private Task createInstanceFrom(Element element, int id, Guard guard, String... args) {
 		String className = element.getAttribute(Attribute.CLASS.getName());
+		debug("parsing element for {}", className);
 		Class<? extends Task> loadedClass = classLibrary.getOrDefault(className, DEFAULT_LIBRARY.get(className));
 		Constructor<? extends Task> constructor = null;
 		try {
@@ -215,6 +221,7 @@ public class TreePlanter {
 			String[] args = new String[argNodes.getLength()];
 			for (int i = 0; i < argNodes.getLength(); i++) {
 				args[i] = argNodes.item(i).getTextContent();
+				debug("arg {}: {}", i, args[i]);
 			}
 			return args;
 		}
