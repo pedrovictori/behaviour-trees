@@ -5,6 +5,7 @@ import behaviour_trees.leaves.Failure;
 import behaviour_trees.leaves.Success;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -155,15 +156,13 @@ public class TreePlanter {
 		}
 	}
 	private Guard parseGuard(Element element, int id) {
-		if (element.getElementsByTagName(TagName.GUARD.getName()).getLength() == 0) { //has no guard
-			return null;
-		} else {
+		Element guardElement = getGuard(element);
+		if (guardElement != null) {
 			debug("parsing guard");
-			Element guardElement = (Element) element.getElementsByTagName(TagName.GUARD.getName()).item(0);
 			Task guard = createInstanceFrom(guardElement, id, parseGuard(guardElement, id), parseArgs(guardElement)); //guard can itself be guarded
 			if(guard instanceof Guard) return (Guard) guard;
 			else throw new IllegalArgumentException("Invalid class definition");
-		}
+		} else return null;
 	}
 
 	private CompositeTask createCompositeInstance(Class<CompositeTask> cClass, int id, List<Task> branches, Guard guard, String... args) {
@@ -254,6 +253,17 @@ public class TreePlanter {
 			e.printStackTrace();
 		}
 		return document;
+	}
+
+	private Element getGuard(Element element){
+		Node child = element.getFirstChild();
+		while(child != null){
+			if(child.getNodeName().equals(TagName.GUARD.getName())){
+				return (Element) child;
+			}
+			child = child.getNextSibling();
+		}
+		return null;
 	}
 
 	private Schema loadSchema() throws SAXException {
