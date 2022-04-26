@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task type="composite" class="selector">
+	<branches>
+		<task type="leaf" class="Leaf2">
+			<guard class="Guard1">
+				<guard class="Guard2"/>
+			</guard>
+		</task>
+		<task type="leaf" class="Leaf3"/>
+		<task type="leaf" class="Leaf1">
+			<guard class="Guard1"/>
+		</task>
+	</branches>
+</task>
