@@ -256,12 +256,10 @@ public class TreePlanter {
 	}
 
 	private Element getGuard(Element element){
-		Node child = element.getFirstChild();
-		while(child != null){
-			if(child.getNodeName().equals(TagName.GUARD.getName())){
-				return (Element) child;
+		for(Node child = element.getFirstChild(); child != null; child = child.getNextSibling()) {
+			if (child.getNodeName().equals(TreePlanter.TagName.GUARD.getName())) {
+				return (Element)child;
 			}
-			child = child.getNextSibling();
 		}
 		return null;
 	}
